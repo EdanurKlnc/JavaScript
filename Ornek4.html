@@ -30,6 +30,11 @@
     <script>
         var meyveler = []; // boş bir dizi tanımladık
         function temizle() {
+            var sonuc = document.querySelectorAll("input[type= text]")
+            console.log(sonuc)
+            for (var i = 0; i < sonuc.length; i++) {
+                sonuc[i].value=""
+            }
             meyveler = [];
 
         } // temizle fonk. bitti

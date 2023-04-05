@@ -1,0 +1,26 @@
+﻿body
+{
+    background-color: #f38181;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.birinciBtn{
+    background-color: yellow;
+    color:darkblue;
+
+}
+.ikinciBtn {
+    background-color: cornflowerblue;
+    color: mediumorchid;
+}
+.tiklandiBtn {
+    background-color: lightpink;
+    color: dodgerblue;
+    
+}
+.btnOrtak{
+   height: 80px;
+    width: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}

@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+
+<html lang="tr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Meyve Liste Örneği</title>
+</head>
+<body>
+    <div style="margin-top:50px;width: 100%; text-align:center">
+        <h2>Meyve Listesi</h2>
+        <hr color="blue" widht:"100%" size="6" />
+
+        <br /><br />
+
+        <input type="text" placeholder="Meyve adı giriniz.." id="txtMeyveAdi" />
+
+        <br /><br />
+
+        <input type="button" value="Ekle" class="btnEkle" onclick="ekle()" />
+        <input type="button" value="Temizle" class="btnTemizle" onclick="temizle()" />
+
+        <br /><br />
+
+        <input type="text" placeholder="Meyve Ara.." id="txtMeyveAra" />
+
+        <br /><br />
+
+        <div id="meyveDiv"></div>
+    </div>
+    <script>
+        var meyveler = []; //boş dizi tanımlama
+
+        function temizle() {
+            meyveler = [];
+        }
+
+        function ekle() {
+            // meyvenin adını al
+            var meyveAdi = document.getElementById("txtMeyveAdi").value.trim();
+            if (meyveAdi == null || meyveAdi.length == 0) {
+                alert("Meyve adı boş geçilemez");
+                return;
+            }
+            var yeniMeyve = { //yeni nesne oluşturma //properties
+                ad: meyveAdi,
+                adet: 1
+            }
+            //meyveler listesine eklenecek
+            var meyvedenVarmi = false;
+            for (var i = 0; i < meyveler.length; i++) {
+                if (meyveler[i].ad.toLowerCase() == meyveAdi.toLowerCase()) {
+                    meyvedenVarmi = true
+                    meyveler[i].adet += 1;
+                    break;
+
+                }
+            }
+            if (!meyvedenVarmi) {
+                meyveler.push(yeniMeyve);
+            }
+            document.getElementById("txtMeyveAdi").value = "";
+            //tüm meyveleri getirece fonk. cağırmalıyız.
+            MeyveleriGetir();
+
+        }
+        function MeyveleriGetir() {
+            //meyveleri tek tek div içine yerleştiricez. Bu işlem için ol kullanılabilir
+
+            document.getElementById("meyveDiv").innerHTML = "";
+            var toplam = 0;
+            var ol = document.createElement("ol")
+            ol.setAttribute("id", "meyveList")
+            for (var i = 0; i < meyveler.length; i++) {
+                toplam += meyveler[i].adet
+                var li = document.createElement("li")
+                li.innerHTML = "<b>" + meyveler[i].ad + "</b > - <i>" + meyveler[i].adet + "</i>"
+                li.style.listStyleType = "none"
+
+                //+ butonu
+                var artiBtn = document.createElement("input");
+                artiBtn.setAttribute("type","button")
+                artiBtn.setAttribute("value", "+")
+                artiBtn.setAttribute("id", meyveler[i].ad)
+                artBtn.addEventListener("click",AdetArttir)
+
+                //- butonu
+                var eksiBtn = document.createElement("input");
+                eksiBtn.setAttribute("type", "button")
+                eksiBtn.setAttribute("value", "-")
+                eksiBtn.setAttribute("id", meyveler[i].ad)
+                eksiBtn.addEventListener("click", AdetAzalt)
+
+
+                //temizle butonu
+                var temizleBtn = document.createElement("input");
+                temizleBtn.setAttribute("type", "button")
+                temizleBtn.setAttribute("value", "temizle")
+                temizleBtn.setAttribute("id", meyveler[i].ad)
+                temizleBtn.addEventListener("click", Temizle)
+
+                li.appendChild(artiBtn)
+                li.appendChild(eksiBtn)
+                li.appendChild(temizleBtn)
+                ol.appendChild(li);
+            }
+            document.getElementById("meyveDiv").appendChild(ol);
+            var span = document.createElement("span");
+            span.innerHTML = "<b>Toplam= " + toplam + "</b>"
+            document.getElementById("meyveDiv").appendChild(span)
+        }
+
+
+    </script>
+</body>
+</html>

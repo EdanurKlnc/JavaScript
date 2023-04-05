@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="tr" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Buton tıklama</title>
+    <link rel="stylesheet" href="./Ornek3.css" />
+</head>
+<body>
+    <h2>Butonlara tıklayınca renkleri diğerine aktarsın</h2>
+    <input type="button" id="btn1" value="buton 1" class="birinciBtn btnOrtak" onclick="btn1Tiklandi(this)" />
+    <input type="button" id="btn2" value="buton 2" class="ikinciBtn btnOrtak" onclick="btn2Tiklandi(this)" />
+
+
+    <script>
+        function btn1Tiklandi(btn) {
+            console.log("btn 1 e tıkladı")
+            var digerBtn = document.getElementById("btn2");
+            digerBtn.classList.remove("ikinciBtn");
+            digerBtn.classList.add("tiklandiBtn");
+
+            //kendisini eski haline getirmeliyiz.
+            //NOT: Eğer elementte birden çok class bulunuyorsa contains metodu kullanılmadılır
+            if (btn.classList.contains('tiklandiBtn')) {
+
+                btn.classList.remove("tiklandiBtn");
+                btn.classList.add("birinciBtn");
+            }
+
+        } //  btn1Tiklandi fonk. bitti
+ 
+        function btn2Tiklandi(btn) {
+            console.log("btn 2 e tıkladı")
+            var digerBtn = document.getElementById("btn1");
+            digerBtn.classList.remove("birinciBtn");
+            digerBtn.classList.add("tiklandiBtn");
+
+            //kendisini eski haline getirmeliyiz.
+            //NOT: Eğer elementte birden çok class bulunuyorsa contains metodu kullanılmadılır.Ya da .value.includes kullanılmalıdır.(yoksa value)
+            if (btn.classList.value.includes('tiklandiBtn')) {
+
+                btn.classList.remove("tiklandiBtn");
+                btn.classList.add("ikinciBtn");
+            }
+        }
+
+    </script>
+</body>
+</html>

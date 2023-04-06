@@ -70,7 +70,7 @@
 
         var kullanicilar = [];
         $(document).ready(function () {
-           
+
             $("#btnEkle").click(function () {
 
                 var $ad = $("#txtAd");
@@ -130,7 +130,7 @@
                 alert("temizle tıkladı")
             });
 
-          
+
 
             $("#txtAra").on("keyup", function () { //$("#txtAra").keyup(function () { });
                 var aranan = $(this).val().toLowerCase();
@@ -155,41 +155,52 @@
         }//kullaniciSil fonk.
 
         function KullanicilariGetir() {
-            $('#kisiDiv').html('')
-            var toplam = 0
+
+            $("#kisiDiv").html('');
+            var toplam = 0;
             if (kullanicilar.length == 0) {
-                return
+                return;
             }
+
             var tabloHtml = "<table class='table table-hover' style='text-align:center'>"
             tabloHtml +=
-                "<tr><th>İsim </th>" +
+                "<tr><th>İsim</th>" +
                 "<th>Soyisim</th>" +
                 "<th>Email</th>" +
                 "<th>Doğum Tarihi</th>" +
-                "<th>İşlemler</th></tr>"
-            tabloHtml += "<tbody>"
+                "<th>İşlemler</th></tr>";
+            tabloHtml += "<tbody>";
 
             for (i in kullanicilar) {
+
                 tabloHtml += "<tr>" +
-                    "<td>" + kullanicilar[i].ad.substring(0, 1).toUpperCase() + kullanicilar[i].ad.substring(1) + "</td>" + //adın ilk harfini büyük yapma
-                    "<td>" + kullanicilar[i].soyad.toUpperCase() + "</td>" + //soyismin bütün harflerini büyük yapma
+                    "<td>" + kullanicilar[i].ad.substring(0, 1).toUpperCase()
+                    + kullanicilar[i].ad.substring(1).toLowerCase() //adın ilk harfini büyük yapma
+                    + "</td>" +
+
+                    "<td>" + kullanicilar[i].soyad.toUpperCase() + "</td>" +  //soyismin bütün harflerini büyük yapma
                     "<td>" + kullanicilar[i].email + "</td>";
 
                 if (kullanicilar[i].dtrh != null) {
                     var d = new Date(kullanicilar[i].dtrh);
-                    tabloHtml += "<td>" + d.getDate() + "/" + (d.getMonth() + 1)
-                        + "/" + d.getFullYear() + "</td>"
-                } else {
-                    tabloHtml += "<td> ------ </td>"
+                    tabloHtml +=
+                        "<td>" + d.getDate() + "/" + (d.getMonth() + 1)
+                        + "/" + d.getFullYear() + "</td>";
                 }
-
+                else {
+                    tabloHtml += "<td> ---- </td>";
+                }
                 tabloHtml +=
-                    "<td><input type='button' class='btn btn-danger btn-sm' value='SİL' onclick= KullaniciSil('" + kullanicilar[i].email + "')/></td>";
+                    "<td><input type='button' class='btn btn-danger btn-sm' value='SİL' onclick=KullaniciSil('" +
+                    kullanicilar[i].email + "') /></td>";
+
                 tabloHtml += "</tr>";
-            }
-            tabloHtml += "</tbody></table>"
-            $("#kisiDiv").html(tabloHtml)
-        }
+
+            } // for bitti
+            tabloHtml += "</tbody></table>";
+            $("#kisiDiv").html(tabloHtml);
+        } // KullanicilariGetir fonk. bitti
+
     </script>
 
 

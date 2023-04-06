@@ -131,10 +131,9 @@
             });
 
 
-
             $("#txtAra").on("keyup", function () { //$("#txtAra").keyup(function () { });
                 var aranan = $(this).val().toLowerCase();
-                $("table td").filter(function () {
+                $("#tbl tr").filter(function () {
                     var sonuc = $(this).text().toLowerCase().indexOf(aranan); //texte basılan harfi bulur. Search kısmıdır
                     console.log(sonuc);
                     $(this).toggle(sonuc > -1);  //toggle() fonksiyonu : Html öğesi görünür durumdaysa gizlemeyi, gizli durumdaysa görünür hale getirmemizi sağlar.
@@ -169,7 +168,7 @@
                 "<th>Email</th>" +
                 "<th>Doğum Tarihi</th>" +
                 "<th>İşlemler</th></tr>";
-            tabloHtml += "<tbody>";
+            tabloHtml += "<tbody id='tbl'>";
 
             for (i in kullanicilar) {
 

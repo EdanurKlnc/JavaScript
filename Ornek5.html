@@ -62,32 +62,134 @@
         </div>
     </div>
 
-
     <script>
 
         //$(document).ready(() => {
         //    alert("berk")
         //}); // document ready bitti
 
+        var kullanicilar = [];
         $(document).ready(function () {
-            var kullanicilar = [];
+           
             $("#btnEkle").click(function () {
+
                 var $ad = $("#txtAd");
                 var $soyad = $("#txtSoyad");
+                var $email = $("#txtEmail");
 
                 if ($ad.val() == null || $ad.val().length == 0 ||
-                    $soyad.val() == null || $soyad.val().length == 0) {
+                    $soyad.val() == null || $soyad.val().length == 0 ||
+                    $email.val() == null || $email.val().length == 0) {
                     alert("Gerekli alanlar girilmelidir!")
+                    return;
+                } // if bitti
+
+                var yeniKullanici = {
+                    ad: $ad.val(),
+                    soyad: $soyad.val(),
+                    email: $email.val(),
+                    dtrh: null
+                };
+                if ($("#dogumtrh").val().length > 0) {
+                    yeniKullanici.dtrh = $("#dogumtrh").val();
                 }
 
+                var kullanicidanVarMi = false;
+                //for (var i = 0; i < kullanicilar.length; i++) {
 
+                //    if (kullanicilar[i].email.toLowerCase() == yeniKullanici.email.toLowerCase()) {
+                //        kullanicidanVarMi = true;
+                //        alert("Aynı emailden zaten sistemde kayıtlıdır")
+                //        return;
+                //    }
+                //}
 
+                for (i in kullanicilar) {
+
+                    if (kullanicilar[i].email.toLowerCase() == yeniKullanici.email.toLowerCase()) {
+                        kullanicidanVarMi = true;
+                        alert("Aynı emailden zaten sistemde kayıtlıdır")
+                        return;
+                    }
+                } // for bitti
+                if (!kullanicidanVarMi) {
+                    kullanicilar.push(yeniKullanici);
+                    alert("Yeni kullanıcı eklendi");
+                    //temizlik
+                    $ad.val('');
+                    $soyad.val('');
+                    $email.val('');
+
+                } // if bitti
+
+                console.log(kullanicilar);
+                KullanicilariGetir()
             }); // btn ekle bitti
 
+            $("#btnTemizle").click(function () {
+                alert("temizle tıkladı")
+            });
+
+          
+
+            $("#txtAra").on("keyup", function () { //$("#txtAra").keyup(function () { });
+                var aranan = $(this).val().toLowerCase();
+                $("table td").filter(function () {
+                    var sonuc = $(this).text().toLowerCase().indexOf(aranan); //texte basılan harfi bulur. Search kısmıdır
+                    console.log(sonuc);
+                    $(this).toggle(sonuc > -1);  //toggle() fonksiyonu : Html öğesi görünür durumdaysa gizlemeyi, gizli durumdaysa görünür hale getirmemizi sağlar.
+
+                }); //filter
+            });//keyup => tuşa basıp elini cektiğin an
 
         }); // document ready bitti
 
+        function KullaniciSil(email) {
+            for (i in kullanicilar) {
+                if (email.toLowerCase() == kullanicilar[i].email.toLowerCase()) {
+                    kullanicilar.splice(i, 1) //i. indexsten itibaren 1 tane sil
+                    break
+                }
+            }
+            KullanicilariGetir()
+        }//kullaniciSil fonk.
 
+        function KullanicilariGetir() {
+            $('#kisiDiv').html('')
+            var toplam = 0
+            if (kullanicilar.length == 0) {
+                return
+            }
+            var tabloHtml = "<table class='table table-hover' style='text-align:center'>"
+            tabloHtml +=
+                "<tr><th>İsim </th>" +
+                "<th>Soyisim</th>" +
+                "<th>Email</th>" +
+                "<th>Doğum Tarihi</th>" +
+                "<th>İşlemler</th></tr>"
+            tabloHtml += "<tbody>"
+
+            for (i in kullanicilar) {
+                tabloHtml += "<tr>" +
+                    "<td>" + kullanicilar[i].ad.substring(0, 1).toUpperCase() + kullanicilar[i].ad.substring(1) + "</td>" + //adın ilk harfini büyük yapma
+                    "<td>" + kullanicilar[i].soyad.toUpperCase() + "</td>" + //soyismin bütün harflerini büyük yapma
+                    "<td>" + kullanicilar[i].email + "</td>";
+
+                if (kullanicilar[i].dtrh != null) {
+                    var d = new Date(kullanicilar[i].dtrh);
+                    tabloHtml += "<td>" + d.getDate() + "/" + (d.getMonth() + 1)
+                        + "/" + d.getFullYear() + "</td>"
+                } else {
+                    tabloHtml += "<td> ------ </td>"
+                }
+
+                tabloHtml +=
+                    "<td><input type='button' class='btn btn-danger btn-sm' value='SİL' onclick= KullaniciSil('" + kullanicilar[i].email + "')/></td>";
+                tabloHtml += "</tr>";
+            }
+            tabloHtml += "</tbody></table>"
+            $("#kisiDiv").html(tabloHtml)
+        }
     </script>
 
 
